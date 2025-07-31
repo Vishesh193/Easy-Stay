@@ -3,27 +3,74 @@ import { IoMdEye } from "react-icons/io";
 import { IoMdEyeOff } from "react-icons/io";
 import { useNavigate } from 'react-router-dom';
 import { FaArrowLeftLong } from "react-icons/fa6";
-// import axios from 'axios';
-// import { authDataContext } from '../Context/AuthContext';
-// import { userDataContext } from '../Context/UserContext';
-// import { toast } from 'react-toastify';
+import axios from 'axios';
+import { authDataContext } from '../Context/AuthContext';
+import { userDataContext } from '../Context/UserContext';
+import { toast } from 'react-toastify';
 
 function SignUp() {
     let [show,setShow] = useState(false)
     let navigate = useNavigate()
-    // let {serverUrl} = useContext(authDataContext)
-    // let {userData,setUserData} = useContext(userDataContext)
+    let {serverUrl} = useContext(authDataContext)
+    let {userData,setUserData} = useContext(userDataContext)
     let [name,setName]= useState("")
     let [email,setEmail]= useState("")
     let [password,setPassword]= useState("")
-    let [loading,setLoading]= useState(false)
+    let {loading,setLoading}= useContext(authDataContext)
 
 
 
     const handleSignUP = async (e) => {
         e.preventDefault()
-        console.log("Form submitted:", { name, email, password })
-       
+        
+        // Basic validation
+        if (!name || name.length < 3) {
+            toast.error("Name must be at least 3 characters long")
+            return
+        }
+        if (!email || !email.includes('@')) {
+            toast.error("Please enter a valid email address")
+            return
+        }
+        if (!password || password.length < 6) {
+            toast.error("Password must be at least 6 characters long")
+            return
+        }
+
+        setLoading(true)
+        try {
+            const result = await axios.post(`${serverUrl}/api/auth/signup`, {
+                name,
+                email,
+                password
+            }, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            setUserData(result.data)
+            setLoading(false)
+            toast.success("Signup Successful!")
+            navigate("/")
+        } catch (error) {
+            setLoading(false)
+            console.error("Signup error:", error)
+            
+            // Handle different types of errors
+            if (error.response) {
+                // Backend returned an error
+                const message = error.response.data.message || "Signup failed. Please try again."
+                toast.error(message)
+            } else if (error.request) {
+                // Request made but no response received
+                toast.error("Cannot connect to server. Please check your internet connection.")
+            } else {
+                // Something else went wrong
+                toast.error("Something went wrong. Please try again.")
+            }
+        }
     }
   return (
     <div className='w-[100vw] h-[100vh] flex items-center justify-center relative'>
