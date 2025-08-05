@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import axios from 'axios';
 import { authDataContext } from '../Context/AuthContext';
-import { userDataContext } from '../Context/UserContext';
+import { userDataContext } from '../Context/UserContext.jsx';
 import { toast } from 'react-toastify';
 
 function SignUp() {
@@ -39,7 +39,7 @@ function SignUp() {
 
         setLoading(true)
         try {
-            const result = await axios.post(`${serverUrl}/api/auth/signup`, {
+            const result = await axios.post(`/api/auth/signup`, {
                 name,
                 email,
                 password
@@ -51,6 +51,7 @@ function SignUp() {
             })
 
             setUserData(result.data)
+            console.log(result.data)
             setLoading(false)
             toast.success("Signup Successful!")
             navigate("/")
