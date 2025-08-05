@@ -42,7 +42,7 @@ function Nav() {
         border-[#dcdcdc] px-[40px] flex item-center 
         justify-between md:px-[40px]'>
                 <div><img src={logo} alt="" className='w-[130px]' /></div>
-                <div className='w-[35%] relative hidden md:block'>
+                <div className='w-[35%] relative hidden md:block mt-[18px]'>
                     <input type="text" className='w-[100%] px-[30px] py-[10px]
                     border-[2px] border-[#bdbaba] outline-none overflow-auto rounded-[30px] text-[17px]' placeholder='Any Where | Any Location | Any City' />
                     <button className='absolute p-[10px] rounded-[50px] bg-[red] right-[2%] top-[5px]'>
