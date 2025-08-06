@@ -17,26 +17,25 @@ function Login() {
     let {loading,setLoading}= useContext(authDataContext)
     let navigate = useNavigate()
      const handleLogin = async (e) => {
-        setLoading(true)
-            try {
-                e.preventDefault()
-                let result = await axios.post(serverUrl + "/api/auth/login",{
-                    email,
-                    password
-    
-                },{withCredentials:true})
-                setLoading(false)
-                setUserData(result.data)
-                navigate("/")
-                console.log(result)
-                 toast.success("Login Successfully")
-            } catch (error) {
-                setLoading(false)
-                console.log(error)
-                toast.error(error.response.data.message)
-
-            }
+        e.preventDefault();
+        setLoading(true);
+        try {
+            const result = await axios.post(serverUrl + "/api/auth/login", {
+                email,
+                password
+            }, { withCredentials: true });
             
+            localStorage.setItem('userData', JSON.stringify(result.data));
+            setUserData(result.data);
+            
+            setLoading(false);
+            toast.success("Login Successfully");
+            navigate("/");
+        } catch (error) {
+            setLoading(false);
+            console.error('Login error:', error);
+            toast.error(error.response?.data?.message || 'Login failed. Please try again.');
+        }
         }
   return (
      <div className='w-[100vw] h-[100vh] flex items-center justify-center relative'>

@@ -17,13 +17,13 @@ let app=express()
 //     res.send("hello from server")
 // })
 
-app.use(express.json()) //body toh undefined nahh chakai
+app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "http://localhost:5173"  ,
-    credentials :true }
-))
+    origin: "http://localhost:5173",
+    credentials: true
+}))
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
