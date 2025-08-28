@@ -6,7 +6,7 @@ import userRouter from "./routes/user.route.js"
 import cookieParser from "cookie-parser"
 import cors from "cors" 
 import listingRouter from "./routes/listing.route.js"
-
+import bookingRouter from "./routes/booking.route.js"
 
 dotenv.config()
 
@@ -21,13 +21,14 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     credentials: true
 }))
 
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/listing", listingRouter)
+app.use("/api/booking",bookingRouter )
 
 app.listen(port,()=>{
     connectDb()

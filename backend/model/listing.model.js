@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import User from "./user.model.js";
-const listingSchema =new mongoose.Schema({
+
+
+const listingSchema = new mongoose.Schema({
     title:{
         type:String,
         required:true
@@ -11,8 +12,13 @@ const listingSchema =new mongoose.Schema({
     },
     host:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:User,
+        ref:"User",
         required:true
+    },
+    guest:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+        
     },
     image1:{
         type:String,
@@ -21,7 +27,7 @@ const listingSchema =new mongoose.Schema({
     image2:{
         type:String,
         required:true
-    },   
+    },
     image3:{
         type:String,
         required:true
@@ -32,22 +38,33 @@ const listingSchema =new mongoose.Schema({
     },
     city:{
         type:String,
-        required:true
+        require:true
+
     },
     landMark:{
         type:String,
-        required:true
+        require:true
+
     },
     category:{
         type:String,
-        required:true
+        require:true
+
+    },
+    ratings:{
+        type:Number,
+        min:0,
+        max:5,
+        default:0
     },
     isBooked:{
         type:Boolean,
         default:false
     }
+
+
 },{timestamps:true})
 
-const Listing = mongoose.model("Listing",listingSchema)
+const Listing = mongoose.model( "Listing" , listingSchema)
 
 export default Listing

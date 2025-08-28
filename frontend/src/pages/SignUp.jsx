@@ -98,16 +98,13 @@ function SignUp() {
             setLoading(false)
             console.error("Signup verification error:", error)
             
-            // Handle different types of errors
+       
             if (error.response) {
-                // Backend returned an error
                 const message = error.response.data.message || "Signup failed. Please try again."
                 toast.error(message)
             } else if (error.request) {
-                // Request made but no response received
                 toast.error("Cannot connect to server. Please check your internet connection.")
             } else {
-                // Something else went wrong
                 toast.error("Something went wrong. Please try again.")
             }
         }
@@ -116,7 +113,7 @@ function SignUp() {
     <div className='w-[100vw] h-[100vh] flex items-center justify-center relative'>
         <div className='w-[50px] h-[50px] bg-[red] cursor-pointer absolute top-[10%] left-[20px] rounded-[50%] flex items-center justify-center' onClick={()=>navigate("/")}><FaArrowLeftLong className='w-[25px] h-[25px] text-[white]' /></div>
         <form action="" className='max-w-[900px] w-[90%] h-[600px] flex items-center justify-center flex-col md:items-start gap-[10px]' onSubmit={showOtpInput ? handleVerifyOTP : handleSendOTP}>
-            <h1 className='text-[30px] text-[black]'>Welcome to Airbnb</h1>
+            <h1 className='text-[30px] text-[black]'>Welcome to Easy Stay</h1>
             
             {!showOtpInput ? (
                 <>

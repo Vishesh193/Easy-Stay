@@ -4,10 +4,10 @@ import { authDataContext } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-// Create the context
+
 export const listingDataContext = createContext(null);
 
-// Create the provider component
+
 const ListingProvider = ({ children }) => {
     let navigate = useNavigate() 
     let [title,setTitle] = useState("")
@@ -40,7 +40,7 @@ const ListingProvider = ({ children }) => {
 
         try {
             
-            // Validate all required fields
+            
             if (!title || !description || !rent || !city || !landmark || !category) {
                 setAdding(false);
                 console.error('Missing fields:', {
@@ -60,7 +60,7 @@ const ListingProvider = ({ children }) => {
                 throw new Error('All three images are required');
             }
 
-            // Validate rent as a number
+           
             const rentNumber = parseFloat(rent);
             if (isNaN(rentNumber)) {
                 setAdding(false);
@@ -69,7 +69,7 @@ const ListingProvider = ({ children }) => {
 
             const formData = new FormData();
             
-            // Add basic fields
+
             formData.append("title", title.trim());
             formData.append("description", description.trim());
             formData.append("rent", Number(rent)); // Ensure rent is a number
@@ -77,7 +77,7 @@ const ListingProvider = ({ children }) => {
             formData.append("landMark", landmark.trim());
             formData.append("category", category);
 
-            // Add images with proper file handling
+
             if (backEndImage1 instanceof File) {
                 formData.append("image1", backEndImage1);
             }
@@ -93,13 +93,12 @@ const ListingProvider = ({ children }) => {
                 console.log(`${key}:`, value);
             }
 
-            // Log the complete FormData for debugging
+
             console.log("Sending data to server:");
             for (let pair of formData.entries()) {
                 console.log(pair[0] + ': ' + pair[1]);
             }
 
-            // Log URL and data before making the request
             console.log('Sending to URL:', `${serverUrl}/api/listing/add`);
             
             const response = await axios.post(
@@ -149,7 +148,7 @@ const ListingProvider = ({ children }) => {
                 console.error('Status code:', error.response.status);
                 
                 if (error.response.status === 401) {
-                    // Clear form data on auth error
+             
                     setTitle("");
                     setDescription("");
                     setRent("");
@@ -168,7 +167,6 @@ const ListingProvider = ({ children }) => {
                         toast.error('Server error. Please try again later.');
                     }
                 } else if (error.response.status === 400) {
-                    // Handle validation errors
                     const errorMessage = error.response.data?.message || 'Validation failed';
                     console.error('Validation error:', errorMessage);
                     toast.error(errorMessage);
@@ -190,7 +188,7 @@ const ListingProvider = ({ children }) => {
      }
      const handleViewCard = async (id) => {
         try {
-            let result = await axios.get( serverUrl + `/api/listing/findlistingByid/${id}`,{withCredentials:true})
+            let result = await axios.get( serverUrl + `/api/listing/findlistingbyid/${id}`,{withCredentials:true})
             console.log(result.data)
             setCardDetails(result.data)
             navigate("/viewcard")

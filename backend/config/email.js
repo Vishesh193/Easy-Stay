@@ -3,7 +3,6 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-// Create transporter with more detailed configuration
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT),
@@ -18,7 +17,7 @@ const transporter = nodemailer.createTransport({
     }
 })
 
-// Verify transporter connection
+
 const verifyConnection = async () => {
     try {
         await transporter.verify()
@@ -30,12 +29,12 @@ const verifyConnection = async () => {
     }
 }
 
-// Call verify immediately
+
 verifyConnection()
 
 export const sendEmail = async (to, subject, html) => {
     try {
-        // Verify connection before sending
+     
         if (!await verifyConnection()) {
             throw new Error('Email server connection failed')
         }

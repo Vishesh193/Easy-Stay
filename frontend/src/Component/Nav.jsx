@@ -88,11 +88,11 @@ function Nav() {
 
                     </div>}
                 </div>
-               {searchData?.length>0 && <div className='w-[100vw] h-[450px]  flex flex-col gap-[20px] absolute top-[50%]  overflow-auto left-[0]   justify-start  items-center'>
+                {input && searchData?.length > 0 && <div className='w-[100vw] h-[450px] flex flex-col gap-[20px] absolute top-[50%] overflow-auto left-[0] justify-start items-center'>
                     <div className='max-w-[700px] w-[100vw] h-[300px] overflow-hidden  flex flex-col bg-[#fefdfd] p-[20px] rounded-lg border-[1px] border-[#a2a1a1] cursor-pointer'>
                         {
                             searchData.map((search)=>(
-                            <div className='border-b border-[black] p-[10px]' onClick={()=>handleClick(search._id)}>
+                            <div key={search._id} className='border-b border-[black] p-[10px]' onClick={()=>handleClick(search._id)}>
                                 {search.title} in {search.landMark},{search.city}
                                  </div>
                             ))

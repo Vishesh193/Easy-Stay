@@ -25,7 +25,7 @@ function ListingPage1() {
    } = useContext(listingDataContext);
 
    useEffect(() => {
-     // Check for user data in localStorage if context is empty
+
      const storedUser = localStorage.getItem('userData');
      
      if (!userData && !storedUser) {
@@ -33,8 +33,6 @@ function ListingPage1() {
        navigate('/login');
        return;
      }
-
-     // Clear form data only if user is authenticated
      if (userData || storedUser) {
        setTitle("");
        setDescription("");
@@ -100,14 +98,13 @@ function ListingPage1() {
             onSubmit={async (e) => {
                 e.preventDefault();
 
-                // Check authentication
+           
                 if (!userData && !localStorage.getItem('userData')) {
                     toast.error('Please login to continue');
                     navigate('/login');
                     return;
                 }
-                
-                // Validate all required fields
+           
                 if (!title.trim()) {
                     toast.error('Please enter a title');
                     return;
@@ -133,7 +130,7 @@ function ListingPage1() {
                     return;
                 }
 
-                // Create FormData object
+           
                 const formData = new FormData();
                 formData.append('title', title.trim());
                 formData.append('description', description.trim());
@@ -144,8 +141,6 @@ function ListingPage1() {
                 formData.append('city', city.trim());
                 formData.append('landmark', landmark.trim());
 
-                // Since we're using a multi-step form, we'll just navigate to the next page
-                // The actual submission will happen in ListingPage3
                 navigate('/listingpage2');
             }}>
             <div className='w-[50px] h-[50px] bg-[red] cursor-pointer absolute top-[5%] left-[20px] rounded-[50%] flex items-center justify-center' onClick={()=>navigate("/")}><FaArrowLeftLong className='w-[25px] h-[25px] text-[white]' /></div>

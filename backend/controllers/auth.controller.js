@@ -20,17 +20,17 @@ export const sendOTP = async (req, res) => {
 
         try {
             const otp = generateOTP();
-            console.log('Generated OTP for email:', email); // Debug log
+            console.log('Generated OTP for email:', email); 
             
             storeOTP(email, otp);
-            console.log('Stored OTP successfully'); // Debug log
+            console.log('Stored OTP successfully'); 
 
             await sendEmail(
                 email,
                 "Verify Your Email - Airbnb Clone",
                 otpEmailTemplate(name, otp)
             );
-            console.log('Email sent successfully'); // Debug log
+            console.log('Email sent successfully'); 
 
             return res.status(200).json({ message: "OTP sent successfully" });
         } catch (emailError) {
@@ -59,7 +59,7 @@ export const verifySignup = async (req, res) => {
             password: hashPassword
         });
 
-        // Send welcome email
+    
         await sendEmail(
             email,
             "Welcome to Airbnb Clone!",
@@ -95,7 +95,7 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: "Incorrect password" });
         }
 
-        // Send login notification email
+      
         await sendEmail(
             email,
             "New Login to Your Account",

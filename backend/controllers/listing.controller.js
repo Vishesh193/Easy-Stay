@@ -23,7 +23,7 @@ export const addListing = async (req,res) => {
             return res.status(400).json({ message: "All three images are required" });
         }
 
-        // Upload images to Cloudinary
+        
         let image1 = await uploadOnCloudinary(req.files.image1[0].path)
         let image2 = await uploadOnCloudinary(req.files.image2[0].path)
         let image3 = await uploadOnCloudinary(req.files.image3[0].path)
@@ -85,28 +85,27 @@ export const updateListing = async (req,res) => {
         const {id} = req.params;
         const {title, description, rent, city, landMark, category} = req.body;
 
-        // First check if listing exists
+      
         const existingListing = await Listing.findById(id);
         if (!existingListing) {
             return res.status(404).json({ message: "Listing not found" });
         }
 
-        // Check if user is the host
+        
         if (existingListing.host.toString() !== req.userId) {
             return res.status(403).json({ message: "Not authorized to update this listing" });
         }
 
-        // Prepare update object
+    
         const updateData = {
             ...(title && { title }),
             ...(description && { description }),
             ...(rent && { rent }),
             ...(city && { city }),
-            ...(landmark && { landmark }),
+            ...(landMark && { landMark }),
             ...(category && { category })
         };
 
-        // Handle image updates
         if (req.files) {
             if (req.files.image1) {
                 const image1 = await uploadOnCloudinary(req.files.image1[0].path);
@@ -180,13 +179,15 @@ export const search = async (req,res) => {
     try {
         const { query } = req.query;
     
-        if (!query) {
-            return res.status(400).json({ message: "Search query is required" });
+        if (!query || query.trim() === "") {
+            // Return all listings when query is empty
+            const allListings = await Listing.find().sort({ createdAt: -1 });
+            return res.status(200).json(allListings);
         }
     
         const listing = await Listing.find({
             $or: [
-                { landmark: { $regex: query, $options: "i" } },
+                { landMark: { $regex: query, $options: "i" } },
                 { city: { $regex: query, $options: "i" } },
                 { title: { $regex: query, $options: "i" } },
                 { category: { $regex: query, $options: "i" } }

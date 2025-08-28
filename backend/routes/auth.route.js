@@ -3,10 +3,10 @@ import { login, logout, sendOTP, verifySignup } from "../controllers/auth.contro
 
 const authRouter = express.Router()
 
-// Auth routes
-authRouter.post("/send-otp", sendOTP)        // Step 1: Send OTP during signup
-authRouter.post("/verify-signup", verifySignup) // Step 2: Verify OTP and create account
-authRouter.post("/login", login)              // Login user
-authRouter.post("/logout", logout)            // Logout user
+
+authRouter.post("/send-otp", sendOTP)      
+authRouter.post("/verify-signup", verifySignup) 
+authRouter.post("/login", login)              
+authRouter.post("/logout", logout)            
 
 export default authRouter

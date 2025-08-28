@@ -41,7 +41,7 @@ function Login() {
      <div className='w-[100vw] h-[100vh] flex items-center justify-center relative'>
         <div className='w-[50px] h-[50px] bg-[red] cursor-pointer absolute top-[10%] left-[20px] rounded-[50%] flex items-center justify-center' onClick={()=>navigate("/")}><FaArrowLeftLong className='w-[25px] h-[25px] text-[white]' /></div>
             <form action="" className='max-w-[900px] w-[90%] h-[600px] flex items-center justify-center flex-col md:items-start gap-[10px]' onSubmit={handleLogin}>
-                <h1 className='text-[30px] text-[black]'>Welcome to Airbnb</h1>
+                <h1 className='text-[30px] text-[black]'>Welcome to Easy Stay</h1>
                 <div className='w-[90%] flex items-start justify-start flex-col gap-[10px]'>
               <label htmlFor="email" className='text-[20px]'>Email</label>
               <input type="text" id='email' className='w-[90%] h-[40px] border-[2px] border-[#555656] rounded-lg text-[18px] px-[20px]' required onChange={(e)=>setEmail(e.target.value)} value={email}/>
